@@ -1,6 +1,4 @@
-Info-Resto
-
-# Instructions pour la correction
+# Info-Resto
 
 Voici une liste des points développés dans ce projet et de brèves instruction explicant comment les tester :
 
