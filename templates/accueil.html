@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block titre %}
+    Accueil
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/a2.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/a5.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/a6.js')}}"></script>
+{% endblock %}
+
+{% block contenu %}
+
+    <!-- Formulaire A2 -->
+    <h1>Recherche générale</h1>
+
+    <form action="/recherche" id="recherche" method="GET">
+        <label class="textfield_label" for="nom">nom de l'établissement</label>
+        <input type="text" name="nom" id="nom"> <br>
+        <label class="textfield_label" for="proprietaire">propriétaire</label>
+        <input type="text" name="proprietaire" id="proprietaire"> <br>
+        <label class="textfield_label" for="rue">rue</label>
+        <input type="text" name="rue" id="rue"><br>
+        <button type="submit"> Rechercher </button>
+    </form> 
+
+    <!-- Formulaire A5 -->
+    <h1>Recherche par date</h1>
+
+    <form id="recherche_date" method="GET">
+        <label class="textfield_label" for="date_debut">date de début</label>
+        <input type="date" name="date_debut" id="date_debut"> <br>
+        <label class="textfield_label" for="date_fin">date de fin</label>
+        <input type="date" name="date_fin" id="date_fin"> <br>
+        <button type="button" onclick="recherche_date();"> Rechercher </button>
+    </form>
+    <p class="erreur_form" id="erreur_tableau"></p>
+    <table class="resultats_date" id="resultats_date"></table>
+
+    <!-- Formulaire A6 -->
+    <h1>Recherche par établissement</h1>
+
+    <form id="recherche_resto" method="GET">
+        <label class="textfield_label" for="etablissement">établissement</label> 
+        <select id="etablissement" name="etablissement" onchange="recherche_resto();">
+            <option value="">Selectionnez l'établissement</option>
+            {% for etablissement in etablissements %}
+            <option value="{{ etablissement }}">{{ etablissement }}</li>
+            {% endfor %}
+        </select>
+    </form>
+    <p class="erreur_form" id="erreur_resto"></p>
+    <table class="resultats_resto" id="resultats_resto"></table>
+
+{% endblock %}

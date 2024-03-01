@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block titre %}
+    Résultats de recherche
+{% endblock %}
+
+{% block contenu %}
+
+    <h1>Résultats de la recherche</h1>
+
+    {% if violations %}
+
+        {% for violation in violations %}
+            <br> 
+        
+            <span class="fiche">
+                <div class="fiche_cat">Categorie : {{ violation.categorie }}</div>
+                <div class="fiche_ville">Ville : {{ violation.ville }}</div>
+
+                <div class="fiche_etablisseement">Etablissement : <span class='rouge'>{{ violation.etablissement }}</span></div>
+                <div class="fiche_busid">Business ID: {{ violation.business_id }}</div>
+
+                <div class="fiche_addr">Adresse : {{ violation.adresse }}</div>
+                <div class="fiche_prop">Proprietaire : {{ violation.proprietaire }}</div>
+                <div class="fiche_statut">Statut : {{ violation.statut }} ({{ violation.date_statut }})</div>
+
+                <div class="fiche_poursuite">Poursuite : {{ violation.id_poursuite }} ({{ violation.date }})</div>
+                <div class="fiche_desc">Description : {{ violation.description }}</div>
+
+                <div class="fiche_date_juge">Date du jugement : {{ violation.date_jugement }}</div>
+                <div class="fiche_montant">Montant de l'amande : {{ violation.montant }} $</div>
+            </span>
+            <br> 
+            <br> 
+
+        {% endfor %}
+
+    {% else %}
+        <p>
+            Aucune publication ne correspond à votre recherche.
+        </p>
+
+        <p>
+            Effectuer une autre recherhche :
+        </p>
+    {% endif %}
+
+    <br>
+
+    <form action="/rechercher" id="recherche" method="GET">
+        nom de l'établissement<input type="text" name="nom" id="nom"> <br>
+        propriétaire<input type="text" name="proprietaire" id="proprietaire"> <br>
+        rue<input type="text" name="rue" id="rue"> <br>
+        <button type="submit"> Rechercher </button>
+    </form> 
+
+
+{% endblock %}

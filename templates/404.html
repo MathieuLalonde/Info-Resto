@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block titre %}
+    404: Page introuvable
+{% endblock %}
+
+{% block contenu %}
+
+    <h1>Erreur 404: Page introuvable</h1>
+    <p>
+        <br>Désolé mais la page que vous cherchez n'existe pas.   
+    </p>
+
+    <div class="centre">
+        <img src="{{ url_for('static', filename='img/assiette.png')}}" id="assiette" alt="assiette vide">  
+    </div>
+
+{% endblock %}

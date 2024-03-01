@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block titre %}
+    Déposer une plainte
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/d1.js')}}"></script>
+{% endblock %}
+
+{% block contenu %}
+
+    <h1>Déposer une plainte</h1>
+
+    <form id="demande_inspection" method="POST">
+        nom de l'établissement <input type="text" name="etablissement" id="etablissement"> <br>
+        adresse <input type="text" name="adresse" id="adresse"> <br>
+        ville <input type="text" name="ville" id="ville"><br>
+        date de votre visite <input type="date" name="date_visite" id="date_visite"><br>
+        votre nom <input type="text" name="nom_client" id="nom_client"> <br>
+        votre prenom <input type="text" name="prenom_client" id="prenom_client"> <br>
+        description du problème observé <textarea cols="60" rows="5" name="description" id="description"></textarea> <br>
+        <button type="button" onclick="demander_inspection();"> Déposer la plainte </button>
+    </form>
+    <p id="confirmation_plainte"></p>
+
+{% endblock %}

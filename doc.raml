@@ -1,0 +1,236 @@
+#%RAML 1.0
+title: Documentation des API REST d'Info-Resto
+mediaType: application/json
+types:
+  Contravention:
+    properties:
+      id_poursuite:
+        type: number
+        required: true
+      business_id:
+        type: string
+        required: true
+      date:
+        type: string
+        required: true
+      description:
+        type: string
+        required: true
+      adresse:
+        type: string
+        required: true
+      date_jugement:
+        type: string
+        required: true    
+      etablissement:
+        type: string
+        required: true
+      montant:
+        type: number
+        required: true
+      proprietaire:
+        type: number
+        required: true 
+      ville:
+        type: string
+        required: true
+      statut:
+        type: string
+        required: true
+      date_statut:
+        type: string
+        required: true 
+      categorie:
+        type: string
+        required: true
+  CompteContraventions:
+    properties:
+      etablissement:
+        type: string
+        required: true
+      nombre_infractions:
+        type: number
+        required: true    
+  DemandeInspection:
+    properties:
+      id:
+        type: number
+        required: true
+      etablissement:
+        type: string
+        required: true          
+      adresse:
+        type: string
+        required: true      
+      ville:
+        type: string
+        required: true      
+      date_visite:
+        type: string
+        required: true      
+      nom_client:
+        type: string
+        required: true      
+      prenom_client:
+        type: string
+        required: true      
+      description:
+        type: string
+        required: true    
+  NouvelleDemandeInspection:
+    properties:
+      etablissement:
+        type: string
+        required: true          
+      adresse:
+        type: string
+        required: true      
+      ville:
+        type: string
+        required: true      
+      date_visite:
+        type: string
+        required: true      
+      nom_client:
+        type: string
+        required: true      
+      prenom_client:
+        type: string
+        required: true      
+      description:
+        type: string
+        required: true             
+/contrevenants:
+  get:
+    description: Retourne une liste de tous les contrevenants à l'intérieur d'une plage temporelle.
+    queryParameters:
+      du:
+        description: La date de début de la recherche
+        required: false
+        length: 10
+        type: string (date ISO 8601)
+        example: 2013-04-27
+      au:
+        description: La date de fin de la recherche
+        required: false
+        length: 10
+        type: string (date ISO 8601)
+        example: 2015-10-31
+    responses:
+      200:
+        body:
+          application/json:
+            type: Contravention[]
+            example:
+              adresse: 1050B Rue Clark, Montréal, Québbec
+              business_id: 10703
+              categorie: Restaurant
+              date: 2011-01-13
+              date_jugement: 2011-06-23
+              date_statut: 2012-04-19
+              description: Les lieux, véhicules, équipements, matériaux et ustensiles servant à la préparation au conditionnement, à l'entreposage, au transport, à l'étiquetage et au service des produits, ainsi que les autres installations et locaux sanitaires, doivent être propres.",
+              etablissement: RESTAURANT CHUAN XIANG QING
+              id_poursuite: 1077
+              montant: 1200
+              proprietaire: RESTAURANT CHUAN XIANG QING INC.
+              statut: Fermée
+              ville: Montréal
+/contrevenant:
+  get:
+    description:
+    queryParameters:
+      etablissement:
+        description: Le nom de l'établissement
+        required: false
+        type: string
+        example: RESTAURANT CHEZ ROBERT
+    responses:
+      200:
+        body:
+          application/json:
+            type: Contravention[]
+      404:
+        description: Il n'existe pas d'établissement correspondant.
+  /{business_id}:
+    delete:
+      description: Supprime toutes les contraventions associées au business_id donné.
+      responses:
+        200:
+          description: L'établissement a été supprimé.
+        404:
+          description: L'établissement n'existe pas.
+/rename_contrevenant:
+  patch:
+    description: Renome un établissement sur toutes les contraventions reliées à son business_id.
+    responses: 
+      200:
+        body:
+          application/json:
+            type: Contravention[]
+      404:
+        description: L'établissement n'existe pas.
+/liste_etablissements_json:
+  get:
+    description: Retourne une liste des noms de tous les contrevenants et du nombre de d'infactions qu'ils on commis.
+    responses:
+      200:
+        body:
+          applycation/json:
+            type: CompteContraventions[]
+            example:
+              etablissement: CHEZ BOB
+              nombre_infractions: 3
+/liste_etablissements_xml:
+  get:
+    description: Retourne une liste des noms de tous les contrevenants et du nombre de d'infactions qu'ils on commis.
+    responses:
+      200:
+        body:
+          applycation/xml:
+            type: CompteContraventions[]
+/liste_etablissements_csv:
+  get:
+    description: Retourne une liste des noms de tous les contrevenants et du nombre de d'infactions qu'ils on commis.
+    responses:
+      200:
+        body:
+          text/csv:
+            type: CompteContraventions[]
+/demande_inspection:
+  post:
+    description: Fait une demande d’inspection à la ville.
+    body:
+      application/json:
+        type: NouvelleDemandeInspection
+        example:
+          etablissement: RESTAURANT CHEZ BOB       
+          adresse: 123 Rue Main
+          ville: Montréal
+          date_visite: 2011-01-13
+          nom_client: Bond
+          prenom_client: James
+          description: Il y avait des coquerelles partout.
+    responses:
+      201:
+        body:
+          application/json:
+            type: DemandeInspection
+            example:
+              id: 1
+              etablissement: RESTAURANT CHEZ BOB     
+              adresse: 123 Rue Main
+              ville: Montréal
+              date_visite: 2011-01-13
+              nom_client: Bond
+              prenom_client: James
+              description: Il y avait des coquerelles partout.        
+  /{id}:
+    delete:
+      description: Permet de suprimer une demande d’inspection selon son id.
+      responses:
+        200:
+          description: La demande d'inspectiona été suprimée
+        404:
+          description: La demande d'inspection demandée n'existe pas.
+
+

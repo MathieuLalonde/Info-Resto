@@ -1,0 +1,11 @@
+{% extends 'email_layout_plain.html' %}
+
+{% block contenu %}create as
+
+Attention! Les établissements suivants ont reçu de nouveaux constats d'infraction après une inspection alimentaire :
+ 
+{% for etablissement in etablissements %}
+- {{ etablissement }}
+{% endfor %}
+
+{% endblock %}

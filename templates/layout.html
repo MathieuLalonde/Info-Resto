@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+        <title>Info-Resto - {% block titre %}!!{% endblock%}</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')}}">
+
+        {% block script %}
+        {% endblock %}
+
+    </head>
+    <body>
+        <header>
+            <div class="en_tete">
+                <a href="{{ url_for('accueil')}}">
+                    <img src="{{ url_for('static', filename='img/logo_lrg.png')}}" id="logo" alt="Info-Resto">
+                </a>
+            </div>
+            <nav>
+                
+                <a href="{{ url_for('accueil')}}">Accueil</a>
+                <span class="spacer">|</span>
+                <a href="{{ url_for('deposer_plainte')}}">Déposer une plainte</a>
+
+            </nav>
+        </header>
+
+        {% block contenu %}
+        {% endblock %}
+        
+        <footer>
+            <img src="{{ url_for('static', filename='img/logo_sml.png')}}" id="petit_logo" alt="logo Info-Resto"><br>
+            &copy; 2023 Info-Resto
+        </footer>
+    </body>
+</html>

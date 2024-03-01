@@ -1,0 +1,15 @@
+{% extends 'email_layout_html.html' %}
+
+{% block contenu %}
+
+    <div>Attention! Les établissements suivants ont reçu de nouveaux constats d'infraction après une inspection alimentaire :</div>
+
+    <ul>
+        {% for etablissement in etablissements %}
+
+            <li>{{ etablissement }}</li>
+
+        {% endfor %}
+    </ul>    
+
+{% endblock %}
